@@ -2,9 +2,9 @@ X,X,X,X,X,X,X,X,X,X
 X,X,M,X,X,M,X,X,P,P
 X,X,X,X,X,X,X,X,X,X
 X,X,M,X,X,M,X,X,X,X
-X,X,X,X,X,X
-X,X,M,X,X,X
-X,X,X,X,X,X
+X,X,X,X,X,X, , , , 
+X,X,M,X,X,X, , , ,
+X,X,X,X,X,X, , , ,
 X,X,M,X,X,X,X,X,X,X
 P,P,X,X,X,X,X,X,X,X
 X,X,X,X,X,X,X,X,X,X
