@@ -36,7 +36,7 @@ url_archive2 = "https://raw.githubusercontent.com/GodorhinoHub/Solemne2-COVID/ma
 #url_archive = input("Ubicación web del archivo: ")
 
 # Reading archive
-mapa = numpy.array(pandas.read_csv(url_archive1,header = None))
+mapa = numpy.array(pandas.read_csv(url_archive2,header = None)) # To change the archive just change the number in the url's name
 
 # Defines quantity of chromosomes
 num_genes = mapa.size
