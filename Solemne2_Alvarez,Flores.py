@@ -15,11 +15,11 @@ int(input("Tamaño población: ")) #50
 # Mutations
 mutation_type = "random" # Type of the mutation operator.
 #mutation_percent_genes = 5
-int(input("Mutación: ")) #5%
+mutation_percent_genes = int(input("Mutación: ")) #5%
 
 # Generations
 #num_generations = 100
-int(input("Num Generaciones: ")) #100
+num_generations = int(input("Num Generaciones: ")) #100
 num_parents_mating = 7 # Number of solutions to be selected as parents in the mating pool.
 
 # Solutions
@@ -32,14 +32,14 @@ keep_parents = 7 # Number of parents to keep in the next population. -1 means ke
 crossover_type = "single_point" # Type of the crossover operator.
 
 # Archive's url
-#url_archive = "https://raw.githubusercontent.com/GodorhinoHub/Solemne2-COVID/main/archivo.txt"
-input("Ubicación web del archivo: ")
-
-# Empty array
-personas = numpy.zeros((10,10))
+url_archive = "https://raw.githubusercontent.com/GodorhinoHub/Solemne2-COVID/main/archivo.txt"
+#url_archive = input("Ubicación web del archivo: ")
 
 # Reading archive
 mapa = numpy.array(pandas.read_csv(url_archive,header = None))
+
+# Empty array
+personas = numpy.zeros((10,10))
 
 # Starting the program
 input("Presione enter para iniciar")
@@ -111,8 +111,8 @@ def distanciaS(personas):
 def fitness_func(solution, solution_idx):
     # Calculating the fitness value of each solution in the current population.
     # The fitness function calulates the sum of products between each input and its corresponding weight.
-    fitness = numpy.sum(distanciaS(revisarMu(dimensionar1(solution))))
-    return fitness
+    fitness = distanciaS(revisarMu(dimensionar1(solution)))
+    return numpy.sum(fitness)
 
 fitness_function = fitness_func
 
@@ -143,10 +143,9 @@ ga_instance.run()
 
 # Returning the details of the best solution.
 solution, solution_fitness, solution_idx = ga_instance.best_solution()
-print("Parameters of the best solution : {solution}".format(solution=solution))
+print("Parameters of the best solution : ")
+print(distanciaS(revisarMu(dimensionar1(solution))))
 print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
-
-print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
 
 if ga_instance.best_solution_generation != -1:
     print("Best fitness value reached after {best_solution_generation} generations.".format(best_solution_generation=ga_instance.best_solution_generation))
