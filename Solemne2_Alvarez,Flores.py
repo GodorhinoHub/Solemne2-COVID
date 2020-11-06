@@ -110,13 +110,13 @@ def distanciaS(personas):
     return personas
 
 def planoFinal(solucion):
-    planoVacio = numpy.zeros(mapa.shape)
+    planoVacio = numpy.empty(mapa.shape,dtype=str)
     for j in range(mapa.shape[0]):
         for i in range(mapa.shape[1]):
             if(mapa[j][i] != 'X'):
-                planoVacio[j][i] == mapa[j][i]
+                planoVacio[j][i] = mapa[j][i]
             if(mapa[j][i] == 'X'):
-                planoVacio[j][i] == solucion[j][i]
+                planoVacio[j][i] = solucion[j][i]
     return planoVacio
 
 # Starting the program
@@ -159,7 +159,7 @@ ga_instance.run()
 # Returning the details of the best solution.
 solution, solution_fitness, solution_idx = ga_instance.best_solution()
 print("Parameters of the best solution :")
-print(distanciaS(revisarMu(dimensionar1(solution))))
+print(planoFinal(distanciaS(revisarMu(dimensionar1(solution)))))
 print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
 
 if ga_instance.best_solution_generation != -1:
