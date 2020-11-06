@@ -31,11 +31,12 @@ keep_parents = 7 # Number of parents to keep in the next population. -1 means ke
 crossover_type = "single_point" # Type of the crossover operator.
 
 # Archive's url
-url_archive = "https://raw.githubusercontent.com/GodorhinoHub/Solemne2-COVID/main/archivo.txt"
+url_archive1 = "https://raw.githubusercontent.com/GodorhinoHub/Solemne2-COVID/main/archivo1.txt"
+url_archive2 = "https://raw.githubusercontent.com/GodorhinoHub/Solemne2-COVID/main/archivo2.txt"
 #url_archive = input("Ubicación web del archivo: ")
 
 # Reading archive
-mapa = numpy.array(pandas.read_csv(url_archive,header = None))
+mapa = numpy.array(pandas.read_csv(url_archive1,header = None))
 
 # Defines quantity of chromosomes
 num_genes = mapa.size
