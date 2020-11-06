@@ -36,7 +36,7 @@ url_archive = "https://raw.githubusercontent.com/GodorhinoHub/Solemne2-COVID/mai
 
 # Reading archive
 mapa = numpy.array(pandas.read_csv(url_archive,header = None))
-#mapa = numpy.array([['X','X','X',None,None,'X','X','P','X'],
+#mapa = numpy.array([['X','X','X',None,None,'X','X','P','X'], # Testing
 #                    ['X','M','X','X','X','X','X','P','X'],
 #                    ['X','X','X','X','M','X','X','X','X'],
 #                    ['X','X','X','X','X','X','X','X','X']])
@@ -44,7 +44,7 @@ mapa = numpy.array(pandas.read_csv(url_archive,header = None))
 # Define cromosomas xd coman mamey
 num_genes = mapa.size
 
-# Make the 1Q solution a 2D array and delete the people in the wrong place
+# Make the 1Dsolution a 2D array and delete the people in the wrong place
 def dimensionar1(soluciones):
     personas = numpy.zeros(mapa.shape)
     posicion = 0
