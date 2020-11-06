@@ -9,22 +9,21 @@ import pandas
 print("Ingrese:")
 
 # Population
-#initial_population = 50 
-int(input("Tamaño población: ")) #50
+initial_population = 50 
+#int(input("Tamaño población: ")) #50
 
 # Mutations
 mutation_type = "random" # Type of the mutation operator.
-#mutation_percent_genes = 5
-mutation_percent_genes = int(input("Mutación: ")) #5%
+mutation_percent_genes = 5
+#mutation_percent_genes = int(input("Mutación: ")) #5%
 
 # Generations
-#num_generations = 100
-num_generations = int(input("Num Generaciones: ")) #100
+num_generations = 100
+#num_generations = int(input("Num Generaciones: ")) #100
 num_parents_mating = 7 # Number of solutions to be selected as parents in the mating pool.
 
 # Solutions
 sol_per_pop = 50 # Number of solutions in the population.
-num_genes = 100
 
 # Parents
 parent_selection_type = "tournament"  # Type of parent selection.
@@ -37,19 +36,20 @@ url_archive = "https://raw.githubusercontent.com/GodorhinoHub/Solemne2-COVID/mai
 
 # Reading archive
 mapa = numpy.array(pandas.read_csv(url_archive,header = None))
+#mapa = numpy.array([['X','X','X','X','X'],
+#                    ['X','M','X','X','X'],
+#                    ['X','X','X','X','X'],
+#                    ['X','X','X','X','X']])
 
-# Empty array
-personas = numpy.zeros((10,10))
-
-# Starting the program
-input("Presione enter para iniciar")
+# Define cromosomas xd coman mamey
+num_genes = mapa.size
 
 # Make the 1Q solution a 2D array and delete the people in the wrong place
 def dimensionar1(soluciones):
-    personas = numpy.zeros((10,10))
+    personas = numpy.zeros(mapa.shape)
     posicion = 0
-    for j in range(10):
-        for i in range(10):
+    for j in range(mapa.shape[0]):
+        for i in range(mapa.shape[1]):
             if(mapa[j][i] == 'X'):
                 personas[j][i] = soluciones[posicion]
             elif(mapa[j][i] != 'X' and soluciones[posicion] == 1):
@@ -59,8 +59,8 @@ def dimensionar1(soluciones):
 
 # Delete people who are in the tables lefting only one
 def revisarMu(personas):
-    for j in range(10):
-        for i in range(10):
+    for j in range(mapa.shape[0]):
+        for i in range(mapa.shape[1]):
             p = 0
             if(mapa[j][i] == 'M'):
                 if(personas[j][i+1] == 1):
@@ -91,21 +91,36 @@ def revisarMu(personas):
 
 # Delete people who aren't respecting the social distance
 def distanciaS(personas):
-    for j in range(10): # fila
-        for i in range(10): # columna
+    jp = mapa.shape[0]
+    ip = mapa.shape[1]
+    for j in range(jp): # fila
+        for i in range(ip): # columna
             if(personas[j][i] == 1):
                 if((i-1 >= 0 and personas[j][i-1] == 1) or
-                   (i+1 <= 9 and personas[j][i+1] == 1) or
+                   (i+1 <= (ip-1) and personas[j][i+1] == 1) or
                    (j-1 >= 0 and personas[j-1][i] == 1) or
-                   (j+1 <= 9 and personas[j+1][i] == 1) or
+                   (j+1 <= (jp-1) and personas[j+1][i] == 1) or
                    (j-1 >= 0 and i-1 >= 0 and personas[j-1][i-1] == 1) or
-                   (j-1 >= 0 and i+1 <= 9 and personas[j-1][i+1] == 1) or
-                   (j+1 <= 9 and i-1 >= 0 and personas[j+1][i-1] == 1) or
-                   (j+1 <= 9 and i+1 <= 9 and personas[j+1][i+1] == 1)):
+                   (j-1 >= 0 and i+1 <= (ip-1) and personas[j-1][i+1] == 1) or
+                   (j+1 <= (jp-1) and i-1 >= 0 and personas[j+1][i-1] == 1) or
+                   (j+1 <= (jp-1) and i+1 <= (ip-1) and personas[j+1][i+1] == 1)):
                     personas[j][i] = 0
                 else:
                     personas[j][i] = 1
     return personas
+
+def planoFinal(solucion):
+    planoVacio = numpy.zeros(mapa.shape)
+    for j in range(mapa.shape[0]):
+        for i in range(mapa.shape[1]):
+            if(mapa[j][i] != 'X'):
+                planoVacio[j][i] == mapa[j][i]
+            if(mapa[j][i] == 'X'):
+                planoVacio[j][i] == solucion[j][i]
+    return planoVacio
+
+# Starting the program
+#input("Presione enter para iniciar")
 
 # Fitness function
 def fitness_func(solution, solution_idx):
@@ -143,7 +158,7 @@ ga_instance.run()
 
 # Returning the details of the best solution.
 solution, solution_fitness, solution_idx = ga_instance.best_solution()
-print("Parameters of the best solution : ")
+print("Parameters of the best solution :")
 print(distanciaS(revisarMu(dimensionar1(solution))))
 print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
 
