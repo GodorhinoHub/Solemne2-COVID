@@ -36,12 +36,8 @@ url_archive = "https://raw.githubusercontent.com/GodorhinoHub/Solemne2-COVID/mai
 
 # Reading archive
 mapa = numpy.array(pandas.read_csv(url_archive,header = None))
-#mapa = numpy.array([['X','X','X',None,None,'X','X','P','X'], # Testing
-#                    ['X','M','X','X','X','X','X','P','X'],
-#                    ['X','X','X','X','M','X','X','X','X'],
-#                    ['X','X','X','X','X','X','X','X','X']])
 
-# Define cromosomas xd coman mamey
+# Defines quantity of chromosomes
 num_genes = mapa.size
 
 # Make the 1Dsolution a 2D array and delete the people in the wrong place
@@ -111,6 +107,7 @@ def distanciaS(personas):
                     personas[j][i] = 1
     return personas
 
+# Melt the map and the final solution and returns a new layer
 def planoFinal(solucion):
     planoVacio = numpy.empty(mapa.shape,dtype=str)
     for j in range(mapa.shape[0]):
