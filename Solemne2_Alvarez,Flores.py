@@ -36,10 +36,10 @@ url_archive = "https://raw.githubusercontent.com/GodorhinoHub/Solemne2-COVID/mai
 
 # Reading archive
 mapa = numpy.array(pandas.read_csv(url_archive,header = None))
-#mapa = numpy.array([['X','X','X','X','X'],
-#                    ['X','M','X','X','X'],
-#                    ['X','X','X','X','X'],
-#                    ['X','X','X','X','X']])
+#mapa = numpy.array([['X','X','X',None,None,'X','X','P','X'],
+#                    ['X','M','X','X','X','X','X','P','X'],
+#                    ['X','X','X','X','M','X','X','X','X'],
+#                    ['X','X','X','X','X','X','X','X','X']])
 
 # Define cromosomas xd coman mamey
 num_genes = mapa.size
@@ -59,32 +59,34 @@ def dimensionar1(soluciones):
 
 # Delete people who are in the tables lefting only one
 def revisarMu(personas):
+    jp = mapa.shape[0]
+    ip = mapa.shape[1]
     for j in range(mapa.shape[0]):
         for i in range(mapa.shape[1]):
             p = 0
             if(mapa[j][i] == 'M'):
-                if(personas[j][i+1] == 1):
+                if(i+1 <= (ip-1) and personas[j][i+1] == 1):
                     p += 1
                     if(p > 1): personas[j][i+1] = 0
-                if(personas[j][i-1] == 1):
+                if(i-1 >= 0 and personas[j][i-1] == 1):
                     p += 1
                     if(p > 1): personas[j][i-1] = 0
-                if(personas[j+1][i] == 1):
+                if(j+1 <= (jp-1) and personas[j+1][i] == 1):
                     p += 1
                     if(p > 1): personas[j+1][i] = 0
-                if(personas[j-1][i] == 1):
+                if(j-1 >= 0 and personas[j-1][i] == 1):
                     p += 1
                     if(p > 1): personas[j-1][i] = 0
-                if(personas[j+1][i+1] == 1):
+                if(j+1 <= (jp-1) and i+1 <= (ip-1) and personas[j+1][i+1] == 1):
                     p += 1
                     if(p > 1): personas[j+1][i+1] = 0
-                if(personas[j+1][i-1] == 1):
+                if(j+1 <= (jp-1) and i-1 >= 0 and personas[j+1][i-1] == 1):
                     p += 1
                     if(p > 1): personas[j+1][i-1] = 0
-                if(personas[j-1][i+1] == 1):
+                if(j-1 >= 0 and i+1 <= (ip-1) and personas[j-1][i+1] == 1):
                     p += 1
                     if(p > 1): personas[j-1][i+1] = 0
-                if(personas[j-1][i-1] == 1):
+                if(j-1 >= 0 and i-1 >= 0 and personas[j-1][i-1] == 1):
                     p += 1
                     if(p > 1): personas[j-1][i-1] = 0
     return personas
@@ -130,8 +132,9 @@ def fitness_func(solution, solution_idx):
     return numpy.sum(fitness)
 
 fitness_function = fitness_func
-
 last_fitness = 0
+
+# Function that repeats every generation, shows the best of
 def callback_generation(ga_instance):
     global last_fitness
     print("Generation = {generation}".format(generation=ga_instance.generations_completed),
@@ -161,7 +164,6 @@ solution, solution_fitness, solution_idx = ga_instance.best_solution()
 print("Parameters of the best solution :")
 print(planoFinal(distanciaS(revisarMu(dimensionar1(solution)))))
 print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
-
 if ga_instance.best_solution_generation != -1:
     print("Best fitness value reached after {best_solution_generation} generations.".format(best_solution_generation=ga_instance.best_solution_generation))
 
